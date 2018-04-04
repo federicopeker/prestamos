@@ -6,6 +6,6 @@ Solucion echa con sqlite
 
 Armado de solucion:
 
-$ virtualenv -p python2.7 virtualenv
-$ . virtualenv/bin/activate
-$ pip install -r requirements.txt
+- $ virtualenv -p python2.7 virtualenv
+- $ . virtualenv/bin/activate
+- $ pip install -r requirements.txt
