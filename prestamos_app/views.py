@@ -54,7 +54,13 @@ def login_view(request):
             if user.is_staff:
                 return HttpResponseRedirect(reverse('solicitud_prestamos'))
             else:
-                return HttpResponseRedirect(reverse('login'))
+                message = 'El usuario no es un administrador'
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    message,
+                )
+                return HttpResponseRedirect(reverse('logout'))
 
     else:
         form = AuthenticationForm(request)
