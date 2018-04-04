@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^prestamos/(?P<pk>\d+)/update/$',
         login_required(views.PrestamoUpdateView.as_view()),
         name='prestamo_update'),
+    url(r'^prestamos/(?P<pk>\d+)/delete/$',
+        login_required(views.PrestamoDeleteView.as_view()),
+        name='prestamo_delete'),
 ]

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-6">
+    <form method="post">{% csrf_token %}
+        <h5>Prestamo del dni <strong>{{ object.dni}}</strong></h5>
+        <h5>¿Esta seguro que desea eliminar este prestamo? </h5>
+        <button type="submit" class="btn btn-danger btn-sm">
+            Eliminar
+        </button>
+        <a href="{% url 'prestamos_list' %}">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

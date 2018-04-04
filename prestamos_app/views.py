@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from prestamos_app.models import Prestamos
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from prestamos_app.forms import PrestamosForm, PrestamoUpdateForm
 from prestamos_app.prestamos_service import PrestamosServices
 from django.contrib.auth import authenticate, login
@@ -83,6 +83,15 @@ class PrestamoUpdateView(UpdateView):
     model = Prestamos
     template_name = 'prestamo_update.html'
     form_class = PrestamoUpdateForm
+
+    def get_success_url(self):
+        return reverse('prestamos_list')
+
+
+class PrestamoDeleteView(DeleteView):
+
+    model = Prestamos
+    template_name = 'prestamo_delete.html'
 
     def get_success_url(self):
         return reverse('prestamos_list')

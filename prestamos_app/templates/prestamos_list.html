@@ -43,6 +43,9 @@
                     <a href="{% url 'prestamo_update' prestamo.pk %}">
                         Modificar prestamo
                     </a>
+                    <a href="{% url 'prestamo_delete' prestamo.pk %}">
+                        Eliminar
+                    </a>
                 </td>
             </tr>
        {% empty %}
