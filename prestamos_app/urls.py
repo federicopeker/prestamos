@@ -16,4 +16,7 @@ urlpatterns = [
     url(r'^prestamos/list/$',
         login_required(views.PrestamosListView.as_view()),
         name='prestamos_list'),
+    url(r'^prestamos/(?P<pk>\d+)/update/$',
+        login_required(views.PrestamoUpdateView.as_view()),
+        name='prestamo_update'),
 ]

@@ -40,7 +40,9 @@
                     {% endif %}
                 </td>
                 <td>
-
+                    <a href="{% url 'prestamo_update' prestamo.pk %}">
+                        Modificar prestamo
+                    </a>
                 </td>
             </tr>
        {% empty %}

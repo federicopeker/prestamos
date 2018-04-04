@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from prestamos_app.models import Prestamos
 from django.views.generic import CreateView, UpdateView, ListView
-from prestamos_app.forms import PrestamosForm
+from prestamos_app.forms import PrestamosForm, PrestamoUpdateForm
 from prestamos_app.prestamos_service import PrestamosServices
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -77,3 +77,12 @@ def login_view(request):
 class PrestamosListView(ListView):
     model = Prestamos
     template_name = 'prestamos_list.html'
+
+
+class PrestamoUpdateView(UpdateView):
+    model = Prestamos
+    template_name = 'prestamo_update.html'
+    form_class = PrestamoUpdateForm
+
+    def get_success_url(self):
+        return reverse('prestamos_list')
