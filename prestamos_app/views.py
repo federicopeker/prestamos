@@ -7,6 +7,10 @@ from prestamos_app.models import Prestamos
 from django.views.generic import CreateView
 from prestamos_app.forms import PrestamosForm
 from prestamos_app.prestamos_service import PrestamosServices
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
 
 
 class PrestamosCreateView(CreateView):
@@ -36,3 +40,27 @@ class PrestamosCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('solicitud_prestamos')
+
+
+def login_view(request):
+
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, user)
+            if user.is_staff:
+                return HttpResponseRedirect(reverse('solicitud_prestamos'))
+            else:
+                return HttpResponseRedirect(reverse('login'))
+
+    else:
+        form = AuthenticationForm(request)
+
+    context = {
+        'form': form,
+    }
+    template_name = 'login.html'
+    return TemplateResponse(request, template_name, context)
