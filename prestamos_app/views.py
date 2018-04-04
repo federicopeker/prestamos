@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from prestamos_app.models import Prestamos
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, ListView
 from prestamos_app.forms import PrestamosForm
 from prestamos_app.prestamos_service import PrestamosServices
 from django.contrib.auth import authenticate, login
@@ -19,18 +19,20 @@ class PrestamosCreateView(CreateView):
     form_class = PrestamosForm
 
     def form_valid(self, form):
-        self.object = form.save()
+        self.object = form.save(commit=False)
         prestamos_service = PrestamosServices()
         resultado = prestamos_service.consulta_prestamos(self.object)
         if resultado['approved']:
             aprobado = "aprobado"
+            self.object.aprobado = True
         else:
             aprobado = "rechazado"
 
         message = 'El prestamo fue {0} '.format(aprobado)
         if resultado['error']:
+            self.object.error = True
             message += " y contiene errores"
-
+        self.object.save()
         messages.add_message(
             self.request,
             messages.INFO,
@@ -52,7 +54,7 @@ def login_view(request):
         if form.is_valid():
             login(request, user)
             if user.is_staff:
-                return HttpResponseRedirect(reverse('solicitud_prestamos'))
+                return HttpResponseRedirect(reverse('prestamos_list'))
             else:
                 message = 'El usuario no es un administrador'
                 messages.add_message(
@@ -70,3 +72,8 @@ def login_view(request):
     }
     template_name = 'login.html'
     return TemplateResponse(request, template_name, context)
+
+
+class PrestamosListView(ListView):
+    model = Prestamos
+    template_name = 'prestamos_list.html'

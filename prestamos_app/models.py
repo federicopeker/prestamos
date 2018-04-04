@@ -11,3 +11,5 @@ class Prestamos(models.Model):
     genero = models.CharField(max_length=2, choices=(('F', 'F'), ('M', 'M')))
     email = models.EmailField()
     monto = models.PositiveIntegerField()
+    aprobado = models.BooleanField(default=False)
+    error = models.BooleanField(default=False)

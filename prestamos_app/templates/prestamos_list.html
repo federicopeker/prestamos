@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Dni</th>
+                <th>Nombre y apellido</th>
+                <th>Genero</th>
+                <th>Email</th>
+                <th>Monto</th>
+                <th>Aprobado</th>
+                <th>Error</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prestamo in object_list %}
+            <tr>
+                <td>{{ prestamo.dni }}</td>
+                <td>{{ prestamo.nombre_apellido}}</td>
+                <td>{{ prestamo.genero }}</td>
+                <td>{{ prestamo.email}}</td>
+                <td>{{ prestamo.monto}}</td>
+                <td>
+                    {% if prestamo.aprobado %}
+                        SI
+                    {% else %}
+                        NO
+                    {% endif %}
+                </td>
+                <td>
+                    {% if prestamo.error %}
+                        SI
+                    {% else %}
+                        NO
+                    {% endif %}
+                </td>
+                <td>
+
+                </td>
+            </tr>
+       {% empty %}
+        <tr>
+            <td colspan="8">No existen prestamos</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
